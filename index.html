@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Time Since Last Vedal987 Dev Stream</title>
+  <style>
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      font-family: sans-serif;
+      background: #f0f0f0;
+    }
+    #counter {
+      background: white;
+      padding: 2rem 3rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    #counter span {
+      display: block;
+      font-size: 2rem;
+      margin: 0.5rem 0;
+    }
+  </style>
+</head>
+<body>
+  <div id="counter">
+    <h1>Time Since Last Vedal987 Dev Stream</h1>
+    <span id="days">0</span> days
+    <span id="hours">0</span> hours
+    <span id="minutes">0</span> minutes
+    <span id="seconds">0</span> seconds
+  </div>
+
+  <script>
+    const lastStream = new Date(Date.UTC(2024, 11, 2, 22, 39, 47));
+
+    function updateCounter() {
+      const now = Date.now();
+      let diff = now - lastStream.getTime();
+
+      const sec = 1000;
+      const min = sec * 60;
+      const hr  = min * 60;
+      const day = hr  * 24;
+
+      const days    = Math.floor(diff / day);
+      diff %= day;
+      const hours   = Math.floor(diff / hr);
+      diff %= hr;
+      const minutes = Math.floor(diff / min);
+      diff %= min;
+      const seconds = Math.floor(diff / sec);
+
+      document.getElementById("days").textContent    = days;
+      document.getElementById("hours").textContent   = hours;
+      document.getElementById("minutes").textContent = minutes;
+      document.getElementById("seconds").textContent = seconds;
+    }
+
+    // Initial call:
+    updateCounter();
+    // Update every second:
+    setInterval(updateCounter, 1000);
+  </script>
+</body>
+</html>
