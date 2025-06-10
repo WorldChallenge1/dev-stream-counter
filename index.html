@@ -8,21 +8,36 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      flex-direction: column;
       height: 100vh;
       font-family: sans-serif;
       background: #f0f0f0;
+      margin: 0;
     }
-    #counter {
+    #counter, #streak {
       background: white;
       padding: 2rem 3rem;
       border-radius: 12px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
       text-align: center;
+      margin: 1rem 0;
     }
-    #counter span {
+    #counter span, #streak span {
       display: block;
       font-size: 2rem;
       margin: 0.5rem 0;
+    }
+    #link {
+      margin-top: 1rem;
+    }
+    #link a {
+      display: inline-block;
+      background: #0073e6;
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 1rem;
     }
   </style>
 </head>
@@ -35,8 +50,23 @@
     <span id="seconds">0</span> seconds
   </div>
 
+  <div id="streak">
+    <h2>Longest Streak to Last Stream</h2>
+    <span id="s-days">0</span> days
+    <span id="s-hours">0</span> hours
+    <span id="s-minutes">0</span> minutes
+    <span id="s-seconds">0</span> seconds
+  </div>
+
+  <div id="link">
+    <a href="https://www.youtube.com/watch?v=i6sP99T7pUI" target="_blank">Watch Last Stream</a>
+  </div>
+
   <script>
-    const lastStream = new Date(Date.UTC(2024, 11, 2, 22, 39, 47));
+    const lastStream = new Date(Date.UTC(2025, 5, 9, 21, 39, 6));
+
+    const streakStart = new Date(Date.UTC(2024, 11, 2, 22, 39, 47));
+    const streakEnd   = new Date(Date.UTC(2025, 5, 9, 18, 0, 0));
 
     function updateCounter() {
       const now = Date.now();
@@ -61,8 +91,32 @@
       document.getElementById("seconds").textContent = seconds;
     }
 
+    function computeStreak() {
+      let diff = streakEnd.getTime() - streakStart.getTime();
+
+      const sec = 1000;
+      const min = sec * 60;
+      const hr  = min * 60;
+      const day = hr  * 24;
+
+      const days    = Math.floor(diff / day);
+      diff %= day;
+      const hours   = Math.floor(diff / hr);
+      diff %= hr;
+      const minutes = Math.floor(diff / min);
+      diff %= min;
+      const seconds = Math.floor(diff / sec);
+
+      document.getElementById("s-days").textContent    = days;
+      document.getElementById("s-hours").textContent   = hours;
+      document.getElementById("s-minutes").textContent = minutes;
+      document.getElementById("s-seconds").textContent = seconds;
+    }
+
+
     // Initial call:
     updateCounter();
+    computeStreak();
     // Update every second:
     setInterval(updateCounter, 1000);
   </script>
