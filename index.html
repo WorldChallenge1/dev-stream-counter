@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Time Since Last Vedal987 Dev Stream</title>
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
@@ -14,37 +15,91 @@
       --text-muted: #6b7280;
       --radius: 1rem;
       --shadow: 0 8px 24px rgba(0,0,0,0.05);
+      --accent: #2563eb;
     }
     *, *::before, *::after { box-sizing: border-box; }
     body {
       margin: 0;
-      padding: 2rem;
+      padding: 2rem 1rem;
       background-color: var(--bg);
       font-family: 'Inter', sans-serif;
       color: var(--text-main);
       display: flex;
       flex-direction: column;
       align-items: center;
+      min-height: 100vh;
+    }
+
+    /* Main layout container */
+    .layout {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      width: 100%;
+      max-width: 1200px;
+    }
+
+    /* Header section */
+    .header {
+      text-align: center;
+      padding: 0 1rem;
+    }
+    .header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+      color: var(--accent);
+    }
+    .header p {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* Stats container */
+    .stats-container {
+      display: flex;
+      flex-direction: column;
       gap: 2rem;
     }
+
+    /* Card styles */
     .card {
       background: var(--card-bg);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
       padding: 2rem;
-      max-width: 360px;
-      width: 100%;
       text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
-    .card h1, .card h2 {
-      margin: 0 0 1rem;
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+    }
+    .card h2 {
+      margin: 0 0 1.5rem;
       font-weight: 700;
+      font-size: 1.5rem;
+      position: relative;
+      padding-bottom: 0.75rem;
     }
+    .card h2::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 3px;
+      background: var(--primary);
+      border-radius: 2px;
+    }
+
+    /* Timer grid */
     .timer-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+      grid-template-columns: repeat(4, 1fr);
       gap: 1.5rem;
-      justify-items: center;
     }
     .timer-item {
       display: flex;
@@ -56,17 +111,27 @@
       font-weight: 600;
       color: var(--primary);
       line-height: 1;
+      min-height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
     .timer-item .label {
-      margin-top: 0.25rem;
+      margin-top: 0.5rem;
       font-size: 0.875rem;
       color: var(--text-muted);
       text-transform: uppercase;
       letter-spacing: 0.05rem;
+      font-weight: 600;
     }
-    #link {
-      max-width: 360px;
-      width: 100%;
+
+    /* Video section */
+    .video-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      margin-top: 1rem;
     }
     .video-thumb {
       position: relative;
@@ -74,10 +139,17 @@
       border-radius: var(--radius);
       overflow: hidden;
       text-decoration: none;
+      transition: transform 0.3s ease;
+      max-width: 640px;
+      width: 100%;
+    }
+    .video-thumb:hover {
+      transform: scale(1.02);
     }
     .video-thumb img {
       width: 100%;
       display: block;
+      border-radius: var(--radius);
     }
     .video-thumb .overlay {
       position: absolute;
@@ -93,6 +165,7 @@
       font-size: 1.25rem;
       opacity: 0;
       transition: opacity 0.3s;
+      border-radius: var(--radius);
     }
     .video-thumb:hover .overlay {
       opacity: 1;
@@ -101,73 +174,164 @@
       font-size: 2rem;
       margin-right: 0.5rem;
     }
-    @media (max-width: 480px) {
-      body { padding: 1rem; }
-      .card { padding: 1.5rem; }
-      .timer-item .value { font-size: 2rem; }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding: 2rem 1rem;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: auto;
+      width: 100%;
+    }
+    .footer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+    .footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* Desktop layout adjustments */
+    @media (min-width: 768px) {
+      body {
+        padding: 2rem;
+      }
+      .stats-container {
+        flex-direction: row;
+        justify-content: center;
+      }
+      .stats-container > * {
+        flex: 1;
+        max-width: 480px;
+      }
+      .header h1 {
+        font-size: 3rem;
+      }
+      .header p {
+        font-size: 1.2rem;
+      }
+      .card {
+        padding: 2.5rem;
+      }
+      .timer-grid {
+        gap: 2rem;
+      }
+      .timer-item .value {
+        font-size: 3rem;
+        min-height: 80px;
+      }
+    }
+
+    /* Mobile adjustments */
+    @media (max-width: 767px) {
+      body {
+        padding: 1.5rem 1rem;
+      }
+      .card {
+        padding: 1.5rem;
+      }
+      .timer-grid {
+        gap: 1rem;
+      }
+      .timer-item .value {
+        font-size: 2rem;
+        min-height: 50px;
+      }
+      .header h1 {
+        font-size: 2rem;
+      }
+    }
+
+    /* Animation for counters */
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+    .timer-item .value.updated {
+      animation: pulse 0.5s ease;
     }
   </style>
 </head>
 <body>
-  <div class="card" id="counter">
-    <h1>Time Since Last Stream</h1>
-    <div class="timer-grid">
-      <div class="timer-item">
-        <div class="value" id="days">0</div>
-        <div class="label">Days</div>
+  <div class="layout">
+    <div class="header">
+      <h1>Vedal987 Dev Stream Tracker</h1>
+      <p>Tracking the time since the last development stream</p>
+    </div>
+
+    <div class="stats-container">
+      <div class="card" id="counter">
+        <h2>Time Since Last Stream</h2>
+        <div class="timer-grid">
+          <div class="timer-item">
+            <div class="value" id="days">0</div>
+            <div class="label">Days</div>
+          </div>
+          <div class="timer-item">
+            <div class="value" id="hours">0</div>
+            <div class="label">Hours</div>
+          </div>
+          <div class="timer-item">
+            <div class="value" id="minutes">0</div>
+            <div class="label">Minutes</div>
+          </div>
+          <div class="timer-item">
+            <div class="value" id="seconds">0</div>
+            <div class="label">Seconds</div>
+          </div>
+        </div>
       </div>
-      <div class="timer-item">
-        <div class="value" id="hours">0</div>
-        <div class="label">Hours</div>
-      </div>
-      <div class="timer-item">
-        <div class="value" id="minutes">0</div>
-        <div class="label">Minutes</div>
-      </div>
-      <div class="timer-item">
-        <div class="value" id="seconds">0</div>
-        <div class="label">Seconds</div>
+
+      <div class="card" id="streak">
+        <h2>Longest Streak</h2>
+        <div class="timer-grid">
+          <div class="timer-item">
+            <div class="value" id="s-days">0</div>
+            <div class="label">Days</div>
+          </div>
+          <div class="timer-item">
+            <div class="value" id="s-hours">0</div>
+            <div class="label">Hours</div>
+          </div>
+          <div class="timer-item">
+            <div class="value" id="s-minutes">0</div>
+            <div class="label">Minutes</div>
+          </div>
+          <div class="timer-item">
+            <div class="value" id="s-seconds">0</div>
+            <div class="label">Seconds</div>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-
-  <div class="card" id="streak">
-    <h2>Longest Streak</h2>
-    <div class="timer-grid">
-      <div class="timer-item">
-        <div class="value" id="s-days">0</div>
-        <div class="label">Days</div>
-      </div>
-      <div class="timer-item">
-        <div class="value" id="s-hours">0</div>
-        <div class="label">Hours</div>
-      </div>
-      <div class="timer-item">
-        <div class="value" id="s-minutes">0</div>
-        <div class="label">Minutes</div>
-      </div>
-      <div class="timer-item">
-        <div class="value" id="s-seconds">0</div>
-        <div class="label">Seconds</div>
-      </div>
+    
+    <div class="video-container">
+      <a href="https://www.youtube.com/watch?v=i6sP99T7pUI" target="_blank" class="video-thumb">
+        <img src="https://img.youtube.com/vi/i6sP99T7pUI/hqdefault.jpg" alt="Last Stream Thumbnail">
+        <div class="overlay">
+          <span class="icon">▶</span>
+          <span>Watch Last Stream</span>
+        </div>
+      </a>
+      <p>Last stream: June 9, 2025</p>
+      <p>Next stream: ???</p>
     </div>
-  </div>
-
-  <div id="link">
-    <a href="https://www.youtube.com/watch?v=i6sP99T7pUI" target="_blank" class="video-thumb">
-      <img src="https://img.youtube.com/vi/i6sP99T7pUI/hqdefault.jpg" alt="Last Stream Thumbnail">
-      <div class="overlay">
-        <span class="icon">▶</span>
-        <span>Watch Last Stream</span>
-      </div>
-    </a>
   </div>
 
   <script>
     const lastStream = new Date(Date.UTC(2025, 5, 9, 21, 39, 6));
-
     const streakStart = new Date(Date.UTC(2024, 11, 2, 22, 39, 47));
     const streakEnd   = new Date(Date.UTC(2025, 5, 9, 18, 0, 0));
+
+    // Animation state tracking
+    const prevValues = {
+      days: 0,
+      hours: 0,
+      minutes: 0,
+      seconds: 0
+    };
 
     function updateCounter() {
       const now = Date.now();
@@ -186,10 +350,28 @@
       diff %= min;
       const seconds = Math.floor(diff / sec);
 
-      document.getElementById("days").textContent    = days;
-      document.getElementById("hours").textContent   = hours;
-      document.getElementById("minutes").textContent = minutes;
-      document.getElementById("seconds").textContent = seconds;
+      // Update with animation if value changed
+      updateWithAnimation('days', days);
+      updateWithAnimation('hours', hours);
+      updateWithAnimation('minutes', minutes);
+      updateWithAnimation('seconds', seconds);
+    }
+
+    function updateWithAnimation(id, value) {
+      const element = document.getElementById(id);
+
+      // Only update and animate if value changed
+      if (prevValues[id] !== value) {
+        element.textContent = value;
+        element.classList.add('updated');
+
+        // Remove animation class after animation completes
+        setTimeout(() => {
+          element.classList.remove('updated');
+        }, 500);
+
+        prevValues[id] = value;
+      }
     }
 
     function computeStreak() {
@@ -213,7 +395,6 @@
       document.getElementById("s-minutes").textContent = minutes;
       document.getElementById("s-seconds").textContent = seconds;
     }
-
 
     // Initial call:
     updateCounter();
