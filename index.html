@@ -64,19 +64,42 @@
       text-transform: uppercase;
       letter-spacing: 0.05rem;
     }
-    #link a {
-      display: inline-block;
-      margin-top: 1rem;
-      background-color: var(--primary);
-      color: #fff;
-      padding: 0.75rem 1.5rem;
-      border-radius: 0.75rem;
-      text-decoration: none;
-      font-weight: 600;
-      transition: background 0.3s;
+    #link {
+      max-width: 360px;
+      width: 100%;
     }
-    #link a:hover {
-      background-color: #2563eb;
+    .video-thumb {
+      position: relative;
+      display: block;
+      border-radius: var(--radius);
+      overflow: hidden;
+      text-decoration: none;
+    }
+    .video-thumb img {
+      width: 100%;
+      display: block;
+    }
+    .video-thumb .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.4);
+      color: #fff;
+      font-size: 1.25rem;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .video-thumb:hover .overlay {
+      opacity: 1;
+    }
+    .overlay .icon {
+      font-size: 2rem;
+      margin-right: 0.5rem;
     }
     @media (max-width: 480px) {
       body { padding: 1rem; }
@@ -131,7 +154,13 @@
   </div>
 
   <div id="link">
-    <a href="https://www.youtube.com/watch?v=i6sP99T7pUI" target="_blank">Watch Last Stream</a>
+    <a href="https://www.youtube.com/watch?v=i6sP99T7pUI" target="_blank" class="video-thumb">
+      <img src="https://img.youtube.com/vi/i6sP99T7pUI/hqdefault.jpg" alt="Last Stream Thumbnail">
+      <div class="overlay">
+        <span class="icon">▶</span>
+        <span>Watch Last Stream</span>
+      </div>
+    </a>
   </div>
 
   <script>
