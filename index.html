@@ -308,8 +308,8 @@
     </div>
 
     <div class="video-container">
-      <a href="https://www.youtube.com/watch?v=z14LubJKDLI" target="_blank" class="video-thumb">
-        <img src="https://img.youtube.com/vi/z14LubJKDLI/hqdefault.jpg" alt="Last Stream Thumbnail">
+      <a id="video-link" target="_blank" class="video-thumb">
+        <img id="video-thumb" alt="Last Stream Thumbnail" />
         <div class="overlay">
           <span class="icon">▶</span>
           <span>Watch Last Stream</span>
@@ -319,9 +319,17 @@
   </div>
 
   <script>
-    const lastStream = new Date(Date.UTC(2025, 5, 23, 20, 40, 25));
+    // Last stream details
+    const videoId = '2Ys8HQp3bls';
+    const lastStream = new Date(Date.UTC(2025, 6, 7, 20, 28, 40));
     const streakStart = new Date(Date.UTC(2024, 11, 2, 22, 39, 47));
     const streakEnd   = new Date(Date.UTC(2025, 5, 9, 18, 0, 0));
+
+    // Set video link and thumbnail
+    const videoLink = document.getElementById('video-link');
+    videoLink.href = `https://www.youtube.com/watch?v=${videoId}`;
+    const videoThumb = document.getElementById('video-thumb');
+    videoThumb.src = `https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg`;
 
     // Animation state tracking
     const prevValues = {
